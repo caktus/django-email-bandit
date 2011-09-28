@@ -1,12 +1,12 @@
 """
-django-email-bandit is aDjango email backend for hijacking email sending in a test environement.  
+django-email-bandit is a Django email backend for hijacking email sending in a test environment.  
 """
 
 __version_info__ = {
     'major': 0,
     'minor': 1,
     'micro': 0,
-    'releaselevel': 'beta',
+    'releaselevel': 'final',
 }
 
 def get_version():
