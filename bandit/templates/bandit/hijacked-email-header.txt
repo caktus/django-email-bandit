@@ -1,0 +1,9 @@
+================================================================================
+
+This email was hijacked by django-email-bandit!
+Below are the original recipients:
+{% spaceless %}{% for email in previous_recipients %}{{ email }}
+{% endfor %}{% endspaceless %}
+
+================================================================================
+
