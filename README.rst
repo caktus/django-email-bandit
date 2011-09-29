@@ -32,6 +32,14 @@ or via pip::
 
     pip install -e git+https://github.com/caktus/django-email-bandit.git
 
+Add django-email-bandit to your installed apps::
+
+    INSTALLED_APPS = (
+        ...
+        'bandit',
+        ...
+    )
+
 For your test environment you should enable the backend::
 
     EMAIL_BACKEND = 'bandit.backends.HijackBackend'
