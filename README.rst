@@ -49,7 +49,7 @@ django-email-bandit supports sending email through SES via
 
 To configure django-email-bandit, set your email backend as follows::
 
-    EMAIL_BACKEND = 'bandit.backends.seacucumber.HijackSESBackend'
+    EMAIL_BACKEND = 'bandit.backends.seacuke.HijackSESBackend'
 
 
 Hijacking Arbitrary Backends

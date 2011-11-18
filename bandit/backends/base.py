@@ -1,7 +1,6 @@
 from operator import and_
 
 from django.conf import settings
-from django.core.mail.backends.smtp import EmailBackend as SMTPBackend
 from django.template.loader import render_to_string
 
 
