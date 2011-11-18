@@ -98,7 +98,7 @@ class HijackBackendTestCase(TestCase):
         super(HijackBackendTestCase, self).tearDown()
 
     def get_connection(self):
-        return get_connection('bandit.backends.HijackBackend')
+        return get_connection('bandit.backends.smtp.HijackSMTPBackend')
 
     def get_mailbox_content(self):
         return self.server.get_sink()

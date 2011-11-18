@@ -42,11 +42,50 @@ Add django-email-bandit to your installed apps::
 
 For your test environment you should enable the backend::
 
-    EMAIL_BACKEND = 'bandit.backends.HijackBackend'
+    EMAIL_BACKEND = 'bandit.backends.smtp.HijackSMTPBackend'
 
 and set the email which will receive all of the emails::
 
     BANDIT_EMAIL = 'bandit@example.com'
+
+
+Using django-seacucumber
+-------------------------------
+
+django-email-bandit supports sending email through SES via 
+`django-seacucumber <https://github.com/duointeractive/sea-cucumber>`_.
+
+To configure django-email-bandit, set your email backend as follows::
+
+    EMAIL_BACKEND = 'bandit.backends.seacuke.HijackSESBackend'
+
+
+Hijacking Arbitrary Backends
+-------------------------------
+
+You can also hijack email to an arbitrary Django email backend by wrapping a
+backend of your choice with the HijackBackendMixin.  For example, if you wanted
+to send email through SES but prefer to use 
+`django-ses <https://github.com/hmarr/django-ses>`_, you would create a
+class like this inside your project::
+
+    from django_ses import SESBackend
+    from bandit.backends.base import HijackBackendMixin
+
+
+    class MyHijackBackend(HijackBackendMixin, SESBackend):
+        """
+        This backend intercepts outgoing messages drops them to a single email
+        address, using the SESBackend in django-ses.
+        """
+        pass
+
+and then set ``EMAIL_BACKEND`` as follows::
+
+    EMAIL_BACKEND = 'my.project.path.to.MyHijackBackend'
+
+Note that the order in which you specify the mixin and base class is very
+important.  If you specify the mixin last, your email will not be hijacked.
 
 
 Questions or Issues?
