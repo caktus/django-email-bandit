@@ -26,10 +26,3 @@ class HijackBackendMixin(object):
                 message.to = [bandit_email, ]
         return super(HijackBackendMixin, self).send_messages(email_messages)
 
-
-class HijackBackend(HijackBackendMixin, SMTPBackend):
-    """
-    This backend intercepts outgoing messages drops them to a single email
-    address.
-    """
-    pass
