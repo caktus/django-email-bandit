@@ -60,6 +60,21 @@ To configure django-email-bandit, set your email backend as follows::
     EMAIL_BACKEND = 'bandit.backends.seacuke.HijackSESBackend'
 
 
+Only logging emails
+-------------------
+
+In environments where your application may generate lots of emails all at once,
+it may be desirable to hijack emails to non-admins and have them logged, but
+not sent out.
+
+django-email-bandit supports this with the ``bandit.backends.smtp.LogOnlySMTPBackend``
+and the ``bandit.backends.seacuke.LogOnlySESBackend``. For example, to configure
+django-email-bandit to only log emails to non-admins, but still send via SMTP
+emails to admins, configure your email backend like so::
+
+    EMAIL_BACKEND = 'bandit.backends.smtp.LogOnlySMTPBackend'
+
+
 Hijacking Arbitrary Backends
 -------------------------------
 
