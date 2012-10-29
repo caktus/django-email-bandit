@@ -11,6 +11,12 @@ v1.0
 - Full project documentation
 
 
+v0.3.0
+-------------------------------
+
+- Added mixin classes for logging hijacked emails rather than sending
+
+
 v0.2.0
 -------------------------------
 
