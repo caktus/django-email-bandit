@@ -1,0 +1,10 @@
+Email hijacked by django-email-bandit:
+
+To: {% for email in message.to %}{{ email }}, {% endfor %}
+{% if message.cc %}Cc: {% for email in message.cc %}{{ email }}, {% endfor %}
+{% endif %}{% if message.bcc %}Bcc: {% for email in message.bcc %}{{ email }}, {% endfor %}
+{% endif %}From: {{ message.from_email }}
+Subject: {{ message.subject }}{% for key, value in message.headers.items %}
+{{ key }}: {{ value }}{% endfor %}
+================================================================================
+{{ message.body }}
