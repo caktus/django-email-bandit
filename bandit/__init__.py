@@ -3,10 +3,10 @@ django-email-bandit is a Django email backend for hijacking email sending in a t
 """
 
 __version_info__ = {
-    'major': 0,
-    'minor': 2,
+    'major': 1,
+    'minor': 0,
     'micro': 0,
-    'releaselevel': 'final',
+    'releaselevel': 'dev',
 }
 
 def get_version():
