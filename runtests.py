@@ -30,14 +30,10 @@ if not settings.configured:
 from django.test.utils import get_runner
 
 
-def runtests(*test_args):
-    if not test_args:
-        test_args = ['bandit']
-    parent = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", )
-    sys.path.insert(0, parent)
+def runtests():
     TestRunner = get_runner(settings)
     test_runner = TestRunner(verbosity=1, interactive=True, failfast=False)
-    failures = test_runner.run_tests(test_args)
+    failures = test_runner.run_tests(['bandit', ])
     sys.exit(failures)
 
 

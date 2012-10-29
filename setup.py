@@ -32,4 +32,6 @@ setup(
         'Operating System :: OS Independent',
     ],
     long_description=read_file('README.rst'),
+    test_suite="runtests.runtests",
+    zip_safe=False,
 )
