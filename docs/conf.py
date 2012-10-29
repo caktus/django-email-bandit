@@ -81,25 +81,31 @@ exclude_patterns = ['_build']
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+#pygments_style = 'sphinx'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
 
 
 # -- Options for HTML output ---------------------------------------------------
-
+import caktus_theme
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'default'
+html_theme = 'caktus'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#html_theme_options = {}
+html_theme_options = {
+    'tagline': 'A Django email backend for hijacking email sending in test environment.',
+    'links': {
+        'pypi': 'http://pypi.python.org/pypi/django-email-bandit',
+        'github': 'https://github.com/caktus/django-email-bandit',
+    },
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = []
+html_theme_path = [caktus_theme.get_theme_dir()]
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -131,7 +137,7 @@ html_static_path = ['_static']
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-#html_sidebars = {}
+html_sidebars = caktus_theme.default_sidebars()
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
