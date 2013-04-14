@@ -22,7 +22,8 @@ class HijackBackendMixin(object):
         admins = getattr(settings, 'ADMINS', ())
         server_email = getattr(settings, 'SERVER_EMAIL', 'root@localhost')
         bandit_email = getattr(settings, 'BANDIT_EMAIL', server_email)
-        approved_emails = set([server_email, bandit_email, ] +
+        whitelist_emails = getattr(settings, 'BANDIT_WHITELIST', ())
+        approved_emails = set([server_email, bandit_email, ] + list(whitelist_emails) +
                               [email for name, email in admins])
         to_send = []
         logged_count = 0
