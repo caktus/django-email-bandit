@@ -9,6 +9,7 @@ v1.0
 
 - Tox support for running tests
 - Full project documentation
+- Added ``BANDIT_WHITELIST`` setting to allow additional emails to pass through
 
 
 v0.3.0
