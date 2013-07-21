@@ -12,5 +12,6 @@ Contents
     :maxdepth: 2
 
     overview
+    backends
     settings
     releases
