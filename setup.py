@@ -21,7 +21,7 @@ setup(
     include_package_data=True,
     url='https://github.com/caktus/django-email-bandit',
     license='BSD',
-    description=u' '.join(__import__('bandit').__doc__.splitlines()).strip(),
+    description=' '.join(__import__('bandit').__doc__.splitlines()).strip(),
     classifiers=[
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Intended Audience :: Developers',

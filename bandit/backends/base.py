@@ -1,5 +1,8 @@
+from __future__ import unicode_literals
+
 import logging
 
+from functools import reduce
 from operator import and_
 
 from django.conf import settings

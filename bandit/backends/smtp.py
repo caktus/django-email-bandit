@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.core.mail.backends.smtp import EmailBackend as SMTPBackend
 
 from bandit.backends.base import HijackBackendMixin, LogOnlyBackendMixin
