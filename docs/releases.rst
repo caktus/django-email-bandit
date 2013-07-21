@@ -7,9 +7,10 @@ History of releases and changes to the django-email-bandit project.
 v1.0
 -------------------------------
 
-- Tox support for running tests
+- Tox support for running tests with Travis CI integration
 - Full project documentation
 - Added ``BANDIT_WHITELIST`` setting to allow additional emails to pass through
+- *Backwards incompatible* Dropped Django 1.2 support
 
 
 v0.3.0
