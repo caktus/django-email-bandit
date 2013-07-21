@@ -1,9 +1,15 @@
 from __future__ import unicode_literals
 
 import asyncore
-import email
 import smtpd
 import threading
+from email import message_from_string
+try:
+    # Python 3
+    from email.utils import parseaddr
+except ImportError:
+    # Python 2
+    from email.Utils import parseaddr
 
 from django.conf import settings
 from django.core.mail import get_connection, EmailMessage
@@ -28,8 +34,8 @@ class FakeSMTPServer(smtpd.SMTPServer, threading.Thread):
         self.sink_lock = threading.Lock()
 
     def process_message(self, peer, mailfrom, rcpttos, data):
-        m = email.message_from_string(data)
-        maddr = email.Utils.parseaddr(m.get('from'))[1]
+        m = message_from_string(data)
+        maddr = parseaddr(m.get('from'))[1]
         if mailfrom != maddr:
             return "553 '%s' != '%s'" % (mailfrom, maddr)
         self.sink_lock.acquire()
