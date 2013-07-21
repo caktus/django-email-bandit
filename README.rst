@@ -1,7 +1,7 @@
 Django-Email-Bandit
 ==============================
 
-A Django email backend for hijacking email sending in test environment. It extends
+A Django email backend for hijacking email sending in a staging/test environment. It extends
 the default SMTP backend to intercept outgoing emails and instead send them
 to a single email address.
 
