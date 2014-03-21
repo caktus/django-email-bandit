@@ -23,7 +23,7 @@ setup(
     license='BSD',
     description=' '.join(__import__('bandit').__doc__.splitlines()).strip(),
     classifiers=(
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
