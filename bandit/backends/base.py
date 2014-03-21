@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 
 logger = logging.getLogger('bandit.backends.base')
 
+
 class HijackBackendMixin(object):
     """
     This backend mixin intercepts outgoing messages drops them to a single
@@ -36,7 +37,7 @@ class HijackBackendMixin(object):
                 to_send.append(message)
             else:
                 context = {'message': message,
-                           'previous_recipients': message.to} # included for backwards compatibility
+                           'previous_recipients': message.to}  # included for backwards compatibility
                 log_message = render_to_string("bandit/hijacked-email-log-message.txt", context)
                 logger.log(self.log_level, log_message)
                 if not self.log_only:

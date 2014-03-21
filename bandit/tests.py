@@ -13,7 +13,6 @@ except ImportError:
 
 from django.conf import settings
 from django.core.mail import get_connection, EmailMessage
-from django.template.loader import render_to_string
 from django.test import TestCase
 
 

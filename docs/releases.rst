@@ -9,7 +9,7 @@ ensure compatibility with newer versions of Django and Python.
 Supported Django Versions
 -------------------------------
 
-django-email-bandit targets to support the current security supported releases of Django. That
+django-email-bandit aims to support the current security-supported releases of Django. That
 includes the most recent version and the prior release. While we will avoid unnecessarily
 dropping support for earlier releases of Django, changes in new versions which
 break compatibility outside of this window will result in dropped support for that
@@ -32,7 +32,7 @@ v1.0
 - Python 3 support
 - Tox support for running tests with Travis CI integration
 - Full project documentation
-- Added ``BANDIT_WHITELIST`` setting to allow additional emails to pass through
+- Added ``BANDIT_WHITELIST`` setting to allow specified emails to pass through
 - *Backwards incompatible* Dropped Django 1.2 support
 
 
