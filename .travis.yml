@@ -6,19 +6,15 @@ python:
 env:
   - TOXENV=py26-1.3.X
   - TOXENV=py26-1.4.X
-  - TOXENV=py26-1.5.X,py32-1.5.X
-  - TOXENV=py26-1.6.X,py32-1.6.X
-  - TOXENV=py27-trunk,py32-trunk
+  - TOXENV=py26-1.5.X,py32-1.5.X,py33-1.5.X
+  - TOXENV=py26-1.6.X,py32-1.6.X,py33-1.6.X
+  - TOXENV=py27-trunk,py33-trunk
 
 install:
   - pip install tox --use-mirrors
 
 script:
-    - tox
-
-branches:
-  only:
-    - master
+  - tox
 
 matrix:
   allow_failures:

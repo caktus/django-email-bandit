@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-import os
 import sys
 
+import django
 from django.conf import settings
-
 
 if not settings.configured:
     settings.configure(
@@ -24,19 +23,19 @@ if not settings.configured:
         SITE_ID=1,
         ADMINS=(('Admin', 'admin@example.com'), ),
         BANDIT_EMAIL='bandit@example.com',
+        BASE_DIR='',  # tells compatibility checker not to emit warning
     )
 
 
-from django.test.utils import get_runner
-
-
 def runtests():
+    if django.VERSION > (1, 7):
+        # http://django.readthedocs.org/en/latest/releases/1.7.html#standalone-scripts
+        django.setup()
+    from django.test.utils import get_runner
     TestRunner = get_runner(settings)
     test_runner = TestRunner(verbosity=1, interactive=True, failfast=False)
     failures = test_runner.run_tests(['bandit', ])
     sys.exit(failures)
 
-
 if __name__ == '__main__':
     runtests(*sys.argv[1:])
-

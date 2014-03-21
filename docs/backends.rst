@@ -2,19 +2,17 @@ Additional Email Backends
 ==============================
 
 Beyond the ``bandit.backends.smtp.HijackSMTPBackend`` used in the getting started
-guide, django-email-bandit defines additional backends other uses as well as
+guide, django-email-bandit defines additional backends and
 contains helpers for hijacking already customized backends.
 
 
 Using django-seacucumber
 -------------------------------
 
-django-email-bandit supports sending email through SES via 
+django-email-bandit supports sending email through SES via
 `django-seacucumber <https://github.com/duointeractive/sea-cucumber>`_.
 
-To configure django-email-bandit, set your email backend as follows:
-
-.. code-block::python
+To configure django-email-bandit, set your email backend as follows::
 
     EMAIL_BACKEND = 'bandit.backends.seacuke.HijackSESBackend'
 
@@ -30,9 +28,7 @@ using the ``bandit`` logger at the ``DEBUG`` level.
 django-email-bandit supports this with the ``bandit.backends.smtp.LogOnlySMTPBackend``
 and the ``bandit.backends.seacuke.LogOnlySESBackend``. For example, to configure
 django-email-bandit to only log emails to non-admins, but still send via SMTP
-emails to admins, configure your email backend like so:
-
-.. code-block::python
+emails to admins, configure your email backend like so::
 
     EMAIL_BACKEND = 'bandit.backends.smtp.LogOnlySMTPBackend'
 
@@ -45,11 +41,9 @@ Hijacking Arbitrary Backends
 
 You can also hijack email to an arbitrary Django email backend by wrapping a
 backend of your choice with the HijackBackendMixin.  For example, if you wanted
-to send email through SES but prefer to use 
+to send email through SES but prefer to use
 `django-ses <https://github.com/hmarr/django-ses>`_, you would create a
-class like this inside your project:
-
-.. code-block::python
+class like this inside your project::
 
     from django_ses import SESBackend
     from bandit.backends.base import HijackBackendMixin
@@ -62,9 +56,7 @@ class like this inside your project:
         """
         pass
 
-and then set ``EMAIL_BACKEND`` as follows:
-
-.. code-block::python
+and then set ``EMAIL_BACKEND`` as follows::
 
     EMAIL_BACKEND = 'my.project.path.to.MyHijackBackend'
 
