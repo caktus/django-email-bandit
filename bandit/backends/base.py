@@ -32,7 +32,8 @@ class HijackBackendMixin(object):
         to_send = []
         logged_count = 0
         for message in email_messages:
-            all_approved = reduce(and_, map(lambda e: e in approved_emails, message.to))
+            recipients = message.to + message.cc + message.bcc
+            all_approved = reduce(and_, map(lambda e: e in approved_emails, recipients))
             if all_approved:
                 to_send.append(message)
             else:
@@ -43,7 +44,11 @@ class HijackBackendMixin(object):
                 if not self.log_only:
                     header = render_to_string("bandit/hijacked-email-header.txt", context)
                     message.body = header + message.body
-                    message.to = [bandit_email, ]
+                    message.to = [bandit_email]
+                    if message.cc:
+                        message.cc = [bandit_email]
+                    if message.bcc:
+                        message.bcc = [bandit_email]
                     to_send.append(message)
                 else:
                     # keep track of how many messages were only logged so we
