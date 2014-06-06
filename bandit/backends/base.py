@@ -38,17 +38,19 @@ class HijackBackendMixin(object):
                 to_send.append(message)
             else:
                 context = {'message': message,
-                           'previous_recipients': message.to}  # included for backwards compatibility
+                           'previous_recipients': message.to,
+                           'previous_cc': message.cc,
+                           'previous_bcc': message.bcc
+                           }  # included for backwards compatibility
                 log_message = render_to_string("bandit/hijacked-email-log-message.txt", context)
                 logger.log(self.log_level, log_message)
                 if not self.log_only:
                     header = render_to_string("bandit/hijacked-email-header.txt", context)
                     message.body = header + message.body
                     message.to = [bandit_email]
-                    if message.cc:
-                        message.cc = [bandit_email]
-                    if message.bcc:
-                        message.bcc = [bandit_email]
+                    # clear cc/bcc
+                    message.cc = []
+                    message.bcc = []
                     to_send.append(message)
                 else:
                     # keep track of how many messages were only logged so we
