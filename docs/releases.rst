@@ -26,7 +26,13 @@ to a ``DeprecationWarning`` and the following release the feature and it's relat
 code will be removed.
 
 
-v1.0
+v1.1 (Released TBD)
+-------------------------------
+
+- Backends now intercept the CC and BCC fields as well
+
+
+v1.0 (Released 2014-03-21)
 -------------------------------
 
 - Python 3 support
