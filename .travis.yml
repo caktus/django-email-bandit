@@ -12,7 +12,7 @@ env:
   - TOXENV=py27-trunk,py33-trunk
 
 install:
-  - pip install tox --use-mirrors
+  - pip install tox
 
 script:
   - tox
