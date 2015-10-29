@@ -26,14 +26,19 @@ class HijackBackendMixin(object):
         admins = getattr(settings, 'ADMINS', ())
         server_email = getattr(settings, 'SERVER_EMAIL', 'root@localhost')
         bandit_email = getattr(settings, 'BANDIT_EMAIL', server_email)
-        whitelist_emails = getattr(settings, 'BANDIT_WHITELIST', ())
+        whitelist_emails = set(getattr(settings, 'BANDIT_WHITELIST', ()))
         approved_emails = set([server_email, bandit_email, ] + list(whitelist_emails) +
                               [email for name, email in admins])
+
+        def is_approved(email):
+            local_part, _, domain = email.rpartition('@')
+            return email in approved_emails or domain in whitelist_emails
+
         to_send = []
         logged_count = 0
         for message in email_messages:
             recipients = message.to + message.cc + message.bcc
-            all_approved = reduce(and_, map(lambda e: e in approved_emails, recipients))
+            all_approved = reduce(and_, map(is_approved, recipients))
             if all_approved:
                 to_send.append(message)
             else:
