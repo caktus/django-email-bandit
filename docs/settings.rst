@@ -23,3 +23,8 @@ add those email addresses to
 ``BANDIT_WHITELIST``. ``BANDIT_WHITELIST`` defaults to an empty tuple::
 
     BANDIT_WHITELIST = ('iloveemail@example.com', )
+
+A domain can also be put in the BANDIT_WHITELIST. This will whitelist any email
+to that domain.
+
+    BANDIT_WHITELIST = ('example.com', )

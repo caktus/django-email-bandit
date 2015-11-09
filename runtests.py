@@ -19,6 +19,7 @@ if not settings.configured:
         SITE_ID=1,
         ADMINS=(('Admin', 'admin@example.com'), ),
         BANDIT_EMAIL='bandit@example.com',
+        BANDIT_WHITELIST=('whitelisted.test.com', ),
         BASE_DIR='',  # tells compatibility checker not to emit warning
     )
 
