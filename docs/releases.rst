@@ -26,11 +26,11 @@ to a ``DeprecationWarning`` and the following release the feature and it's relat
 code will be removed.
 
 
-v1.1 (Released TBD)
+v1.1 (Released 2016-01-20)
 -------------------------------
 
 - Backends now intercept the CC and BCC fields as well
-
+- Entire domains can be whitelisted. See the :doc:`settings documentation <settings>`.
 
 v1.0 (Released 2014-03-21)
 -------------------------------
