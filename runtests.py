@@ -21,6 +21,12 @@ if not settings.configured:
         BANDIT_EMAIL='bandit@example.com',
         BANDIT_WHITELIST=('whitelisted.test.com', ),
         BASE_DIR='',  # tells compatibility checker not to emit warning
+        TEMPLATES=[
+            {
+                "BACKEND": 'django.template.backends.django.DjangoTemplates',
+                "DIRS": ['bandit/templates'],
+            }
+        ],
     )
 
 
