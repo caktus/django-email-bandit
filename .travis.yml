@@ -10,7 +10,7 @@ env:
   - TOXENV=py27-1.8,py33-1.8,py34-1.8
   - TOXENV=py27-1.9,py34-1.9,py35-1.9
   - TOXENV=py27-1.10,py34-1.10,py35-1.10
-  - TOXENV=py27-trunk,py33-trunk,py34-trunk,py35-trunk
+  - TOXENV=py27-trunk,py34-trunk,py35-trunk
 
 install:
   - pip install tox
