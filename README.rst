@@ -29,7 +29,7 @@ email backend such as `django-ses <https://github.com/hmarr/django-ses>`_.
 Requirements
 -------------------------------
 
-- Python 2.7 or 3.3+ (Python 3 support required Django >= 1.5)
+- Python 2.6, 2.7 or 3.3+ (Python 3 support required Django >= 1.5)
 - Django >= 1.3
 
 

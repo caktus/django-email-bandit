@@ -4,8 +4,8 @@ python:
   - "3.5"
 
 env:
-  - TOXENV=py27-1.5,py33-1.5
-  - TOXENV=py27-1.6,py33-1.6
+  - TOXENV=py26-1.5,py27-1.5,py33-1.5
+  - TOXENV=py26-1.6,py27-1.6,py33-1.6
   - TOXENV=py27-1.7,py33-1.7,py34-1.7
   - TOXENV=py27-1.8,py33-1.8,py34-1.8
   - TOXENV=py27-1.9,py34-1.9,py35-1.9
