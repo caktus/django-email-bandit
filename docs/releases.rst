@@ -25,6 +25,11 @@ raise a ``PendingDeprecationWarning``. In the following release that will be rai
 to a ``DeprecationWarning`` and the following release the feature and it's related compatibility
 code will be removed.
 
+v1.2 (Released 2016-11-08)
+-------------------------------
+
+- Added support and test coverage for Django 1.10
+
 
 v1.1 (Released 2016-01-20)
 -------------------------------
