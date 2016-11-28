@@ -22,7 +22,7 @@ setup(
     url='https://github.com/caktus/django-email-bandit',
     license='BSD',
     description=' '.join(__import__('bandit').__doc__.splitlines()).strip(),
-    classifiers=(
+    classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -37,7 +37,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules',
-    ),
+    ],
     long_description=read_file('README.rst'),
     test_suite="runtests.runtests",
     zip_safe=False,
