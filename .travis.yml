@@ -3,21 +3,20 @@ language: python
 python:
   - "3.6"
 
+# Test a sampling of combinations
 env:
-  - TOXENV=py26-1.5,py27-1.5,py33-1.5
-  - TOXENV=py26-1.6,py27-1.6,py33-1.6
-  - TOXENV=py27-1.7,py33-1.7,py34-1.7
-  - TOXENV=py27-1.8,py33-1.8,py34-1.8
-  - TOXENV=py27-1.9,py34-1.9,py35-1.9
-  - TOXENV=py27-1.10,py34-1.10,py35-1.10
-  - TOXENV=py27-trunk,py34-trunk,py35-trunk
+  - TOXENV=py27-1.7,py34-1.7
+  - TOXENV=py27-1.8,py34-1.8,py36-1.8
+  - TOXENV=py27-1.9,py35-1.9
+  - TOXENV=py27-1.10,py35-1.10,py36-1.10
+  - TOXENV=py27-1.11,py34-1.11,py35-1.11,py36-1.11
 
 install:
   - pip install tox
 
 script:
   - tox
-
-matrix:
-  allow_failures:
-    - env: TOXENV=py27-trunk,py33-trunk
+#
+#matrix:
+#  allow_failures:
+#    - env: TOXENV=py27-trunk,py33-trunk
