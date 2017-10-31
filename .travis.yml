@@ -1,3 +1,12 @@
+# Need multiple versions of Python available
+addons:
+  apt:
+    packages:
+    - python2.7-dev
+    - python3.4-dev
+    - python3.5-dev
+    - python3.6-dev
+
 language: python
 
 python:
