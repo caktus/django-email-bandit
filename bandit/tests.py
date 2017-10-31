@@ -1,13 +1,15 @@
 from __future__ import unicode_literals
+import six
 
 import asyncore
+import platform
 import smtpd
 import threading
 from email import message_from_string
-try:
+if six.PY3:
     # Python 3
     from email.utils import parseaddr
-except ImportError:
+else:
     # Python 2
     from email.Utils import parseaddr
 
@@ -26,13 +28,17 @@ class FakeSMTPServer(smtpd.SMTPServer, threading.Thread):
 
     def __init__(self, *args, **kwargs):
         threading.Thread.__init__(self)
+        if platform.python_version_tuple() >= ("3", "5"):
+            kwargs.setdefault('decode_data', True)
         smtpd.SMTPServer.__init__(self, *args, **kwargs)
         self._sink = []
         self.active = False
         self.active_lock = threading.Lock()
         self.sink_lock = threading.Lock()
 
-    def process_message(self, peer, mailfrom, rcpttos, data):
+    def process_message(self, peer, mailfrom, rcpttos, data, **kwargs):
+        # if not isinstance(data, six.text_type):
+        #     data = data.decode('utf-8')
         m = message_from_string(data)
         maddr = parseaddr(m.get('from'))[1]
         if mailfrom != maddr:

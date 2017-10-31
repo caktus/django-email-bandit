@@ -1,7 +1,7 @@
 language: python
 
 python:
-  - "3.5"
+  - "3.6"
 
 env:
   - TOXENV=py26-1.5,py27-1.5,py33-1.5

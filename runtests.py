@@ -36,7 +36,7 @@ def runtests():
         django.setup()
     from django.test.utils import get_runner
     TestRunner = get_runner(settings)
-    test_runner = TestRunner(verbosity=1, interactive=True, failfast=False)
+    test_runner = TestRunner(verbosity=1, interactive=True, failfast=True)
     failures = test_runner.run_tests(['bandit', ])
     sys.exit(failures)
 
