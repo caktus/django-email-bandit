@@ -1,7 +1,25 @@
+# Use travis container-based build system for speed
 sudo: false
+
+# Ubuntu trusty (14.04) - latest that Travis offers
+dist: trusty
+
+# Make sure all the python versions we need are pre-installed
+# (apt-get is not available in the container-based build system)
+addons:
+  apt:
+    sources:
+    - deadsnakes
+    packages:
+    - python2.7
+    - python3.4
+    - python3.5
+    - python3.6
 
 language: python
 
+# The version of Python that'll be used to invoke tox. Has no effect
+# on what version of Python tox uses to run each set of tests.
 python:
   - "3.5"
 
