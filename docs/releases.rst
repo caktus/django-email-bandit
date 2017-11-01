@@ -26,10 +26,12 @@ to a ``DeprecationWarning`` and the following release the feature and it's relat
 code will be removed.
 
 
-v1.3.dev (Not yet released)
--------------------------------
+v1.3 (released 2017-10-31)
+--------------------------
 
-- <Add changes here>
+- Added support and test coverage for Django 1.11
+- Added support and test coverage for Python 3.6
+- Dropped support for Python 2.6 and Python 3.3.
 
 
 v1.2 (Released 2016-11-08)
