@@ -1,24 +1,25 @@
-# Need multiple versions of Python available
-addons:
-  apt:
-    packages:
-    - python2.7
-    - python3.4
-    - python3.5
-    - python3.6
+sudo: false
 
 language: python
 
 python:
-  - "3.6"
+  - "3.5"
 
 # Test a sampling of combinations
 env:
-  - TOXENV=py27-1.7,py34-1.7
-  - TOXENV=py27-1.8,py34-1.8,py36-1.8
-  - TOXENV=py27-1.9,py35-1.9
-  - TOXENV=py27-1.10,py35-1.10,py36-1.10
-  - TOXENV=py27-1.11,py34-1.11,py35-1.11,py36-1.11
+  - TOXENV=py27-1.7
+  - TOXENV=py27-1.8
+  - TOXENV=py27-1.10
+  - TOXENV=py27-1.11
+  - TOXENV=py34-1.7
+  - TOXENV=py34-1.8
+  - TOXENV=py34-1.11
+  - TOXENV=py35-1.9
+  - TOXENV=py35-1.10
+  - TOXENV=py35-1.11
+  - TOXENV=py36-1.8
+  - TOXENV=py36-1.10
+  - TOXENV=py36-1.11
 
 install:
   - pip install tox
