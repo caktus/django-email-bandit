@@ -176,7 +176,7 @@ class HijackBackendTestCase(BaseBackendTestCase):
         num_sent = self.get_connection().send_messages(emails)
         self.assertEqual(len(emails), num_sent)
         messages = self.get_mailbox_content()
-        self.assertEqual(messages[0].get_all('to').replace('\n', ''), [', '.join(addresses)])
+        self.assertEqual(messages[0].get_all('to')[0].replace('\n', ''), ', '.join(addresses))
 
 
 class LogOnlyBackendTestCase(BaseBackendTestCase):
