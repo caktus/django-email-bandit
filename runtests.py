@@ -38,7 +38,8 @@ def runtests():
     TestRunner = get_runner(settings)
     test_runner = TestRunner(verbosity=1, interactive=True, failfast=True)
     failures = test_runner.run_tests(['bandit', ])
-    sys.exit(failures)
+    if failures:
+        sys.exit(1)
 
 if __name__ == '__main__':
     runtests(*sys.argv[1:])
