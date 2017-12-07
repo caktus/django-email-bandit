@@ -22,9 +22,6 @@ setup(
     url='https://github.com/caktus/django-email-bandit',
     license='BSD',
     description=' '.join(__import__('bandit').__doc__.splitlines()).strip(),
-    install_requires=[
-        'six'
-    ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
