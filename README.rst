@@ -16,12 +16,12 @@ logging. Mixin classes are provided to use the same hijack logic for any existin
 email backend such as `django-ses <https://github.com/hmarr/django-ses>`_.
 
 .. |master-status| image::
-    https://api.travis-ci.org/caktus/django-email-bandit.png?branch=master
+    https://api.travis-ci.org/caktus/django-email-bandit.svg?branch=master
     :alt: Build Status
     :target: https://travis-ci.org/caktus/django-email-bandit
 
 .. |develop-status| image::
-    https://api.travis-ci.org/caktus/django-email-bandit.png?branch=develop
+    https://api.travis-ci.org/caktus/django-email-bandit.svg?branch=develop
     :alt: Build Status
     :target: https://travis-ci.org/caktus/django-email-bandit
 
