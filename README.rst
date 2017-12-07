@@ -56,6 +56,13 @@ and set the email which will receive all of the emails::
 
     BANDIT_EMAIL = 'bandit@example.com'
 
+It's also possible to whitelist certain email addresses and domains::
+
+    BANDIT_WHITELIST = [
+        'iloveemail@example.com',  # Just this specific email address
+        'example.net'   # All email addresses @example.net
+    ]
+
 
 Documentation
 -------------------------------
