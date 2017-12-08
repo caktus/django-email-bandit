@@ -1,17 +1,12 @@
 from __future__ import unicode_literals
-import six
 
 import asyncore
 import platform
 import smtpd
 import threading
+
 from email import message_from_string
-if six.PY3:
-    # Python 3
-    from email.utils import parseaddr
-else:
-    # Python 2
-    from email.Utils import parseaddr
+from email.utils import parseaddr
 
 from django.conf import settings
 from django.core.mail import get_connection, EmailMessage
@@ -37,8 +32,6 @@ class FakeSMTPServer(smtpd.SMTPServer, threading.Thread):
         self.sink_lock = threading.Lock()
 
     def process_message(self, peer, mailfrom, rcpttos, data, **kwargs):
-        # if not isinstance(data, six.text_type):
-        #     data = data.decode('utf-8')
         m = message_from_string(data)
         maddr = parseaddr(m.get('from'))[1]
         if mailfrom != maddr:

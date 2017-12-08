@@ -16,12 +16,12 @@ logging. Mixin classes are provided to use the same hijack logic for any existin
 email backend such as `django-ses <https://github.com/hmarr/django-ses>`_.
 
 .. |master-status| image::
-    https://api.travis-ci.org/caktus/django-email-bandit.png?branch=master
+    https://api.travis-ci.org/caktus/django-email-bandit.svg?branch=master
     :alt: Build Status
     :target: https://travis-ci.org/caktus/django-email-bandit
 
 .. |develop-status| image::
-    https://api.travis-ci.org/caktus/django-email-bandit.png?branch=develop
+    https://api.travis-ci.org/caktus/django-email-bandit.svg?branch=develop
     :alt: Build Status
     :target: https://travis-ci.org/caktus/django-email-bandit
 
@@ -40,14 +40,6 @@ To install django-email-bandit via pip::
 
     pip install django-email-bandit
 
-Add django-email-bandit to your installed apps::
-
-    INSTALLED_APPS = (
-        ...
-        'bandit',
-        ...
-    )
-
 For your test environment you should enable the backend::
 
     EMAIL_BACKEND = 'bandit.backends.smtp.HijackSMTPBackend'
@@ -55,6 +47,13 @@ For your test environment you should enable the backend::
 and set the email which will receive all of the emails::
 
     BANDIT_EMAIL = 'bandit@example.com'
+
+It's also possible to whitelist certain email addresses and domains::
+
+    BANDIT_WHITELIST = [
+        'iloveemail@example.com',  # Just this specific email address
+        'example.net'   # All email addresses @example.net
+    ]
 
 
 Documentation
