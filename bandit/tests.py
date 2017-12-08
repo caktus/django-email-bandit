@@ -162,12 +162,14 @@ class HijackBackendTestCase(BaseBackendTestCase):
         self.assertEqual(message.get_all('to'), ['admin@example.com', ])
 
     def test_whitelist_domain(self):
-        addresses = ['foo@whitelisted.test.com', 'bar@whitelisted.test.com']
+        addresses = ['foo@whitelisted.test.com',
+                     '<bar@whitelisted.test.com>',
+                     'Foo Bar <baz@whitelisted.test.com>']
         emails = [EmailMessage( 'Subject', 'Content', 'from@example.com', addresses)]
         num_sent = self.get_connection().send_messages(emails)
         self.assertEqual(len(emails), num_sent)
         messages = self.get_mailbox_content()
-        self.assertEqual(messages[0].get_all('to'), [', '.join(addresses)])
+        self.assertEqual(messages[0].get_all('to')[0].replace('\n', ''), ', '.join(addresses))
 
 
 class LogOnlyBackendTestCase(BaseBackendTestCase):

@@ -31,15 +31,14 @@ if not settings.configured:
 
 
 def runtests():
-    if django.VERSION > (1, 7):
-        # http://django.readthedocs.org/en/latest/releases/1.7.html#standalone-scripts
-        django.setup()
+    django.setup()
     from django.test.utils import get_runner
     TestRunner = get_runner(settings)
     test_runner = TestRunner(verbosity=1, interactive=True, failfast=True)
-    failures = test_runner.run_tests(['bandit', ])
+    failures = test_runner.run_tests(['bandit'])
     if failures:
         sys.exit(1)
+
 
 if __name__ == '__main__':
     runtests(*sys.argv[1:])

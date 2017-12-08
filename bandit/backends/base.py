@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import logging
 
+from email.utils import parseaddr
 from functools import reduce
 from operator import and_
 
@@ -31,7 +32,8 @@ class HijackBackendMixin(object):
                               [email for name, email in admins])
 
         def is_approved(email):
-            local_part, _, domain = email.rpartition('@')
+            _, email = parseaddr(email)
+            _, _, domain = email.rpartition('@')
             return email in approved_emails or domain in whitelist_emails
 
         to_send = []
