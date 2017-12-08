@@ -26,6 +26,15 @@ to a ``DeprecationWarning`` and the following release the feature and it's relat
 code will be removed.
 
 
+v1.4 (released 2017-12-08)
+--------------------------
+
+- Added support for Django 2.0 and Python 3.5
+- Dropped support for Django 1.5, 1.6, 1.7, 1.9 and Python 3.4
+- Documentation improvements
+- Support more email address formats (#19)
+
+
 v1.3 (released 2017-10-31)
 --------------------------
 
