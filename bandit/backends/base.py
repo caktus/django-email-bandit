@@ -54,7 +54,10 @@ class HijackBackendMixin(object):
                 if not self.log_only:
                     header = render_to_string("bandit/hijacked-email-header.txt", context)
                     message.body = header + message.body
-                    message.to = [bandit_email]
+                    if isinstance(bandit_email, list):
+                        message.to = bandit_email
+                    else:
+                        message.to = [bandit_email]
                     # clear cc/bcc
                     message.cc = []
                     message.bcc = []
