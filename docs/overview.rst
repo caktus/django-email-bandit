@@ -57,5 +57,10 @@ template. This template is given the context::
 
     {
         'message': message,  # Original EmailMessage object,
-        'previous_recipients': previous_recipients, # List of the original recipients
+        'previous_recipients': previous_recipients,  # List of the original recipients
+        'previous_cc': previous_cc,  # List of the original CC'ed recipients
+        'previous_bcc': previous_bcc,  # List of the original BCC'ed recipients
     }
+
+Note that the default header template doesn't include ``previous_cc`` or ``previous_bcc``, so
+you'll need to create a custom template if you need those displayed.
