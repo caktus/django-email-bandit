@@ -4,7 +4,6 @@ import logging
 
 from email.utils import parseaddr
 from functools import reduce
-from operator import and_
 
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -42,7 +41,7 @@ class HijackBackendMixin(object):
         logged_count = 0
         for message in email_messages:
             recipients = message.to + message.cc + message.bcc
-            all_approved = reduce(and_, map(is_approved, recipients))
+            all_approved = all(map(is_approved, recipients))
             if all_approved:
                 to_send.append(message)
             else:
