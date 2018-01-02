@@ -16,6 +16,7 @@ class HijackSMTPBackend(HijackBackendMixin, SMTPBackend):
 class LogOnlySMTPBackend(LogOnlyBackendMixin, SMTPBackend):
     """
     This backend intercepts outgoing messages and logs them, allowing
-    only messages destined for ADMINS to be sent via SMTP.
+    only messages destined for ADMINS, BANDIT_EMAIL, SERVER_EMAIL, or
+    BANDIT_WHITELIST to be sent via SMTP.
     """
     pass
