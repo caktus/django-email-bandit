@@ -27,8 +27,10 @@ class HijackBackendMixin(object):
         admins = getattr(settings, 'ADMINS', ())
         server_email = getattr(settings, 'SERVER_EMAIL', 'root@localhost')
         bandit_email = getattr(settings, 'BANDIT_EMAIL', server_email)
+        if not isinstance(bandit_email, list):
+            bandit_email = [bandit_email]
         whitelist_emails = set(getattr(settings, 'BANDIT_WHITELIST', ()))
-        approved_emails = set([server_email, bandit_email, ] + list(whitelist_emails) +
+        approved_emails = set([server_email] + bandit_email + list(whitelist_emails) +
                               [email for name, email in admins])
 
         def is_approved(email):
@@ -54,7 +56,7 @@ class HijackBackendMixin(object):
                 if not self.log_only:
                     header = render_to_string("bandit/hijacked-email-header.txt", context)
                     message.body = header + message.body
-                    message.to = [bandit_email]
+                    message.to = bandit_email
                     # clear cc/bcc
                     message.cc = []
                     message.bcc = []
