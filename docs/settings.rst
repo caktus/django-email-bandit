@@ -12,6 +12,10 @@ This defaults to the ``SERVER_EMAIL`` setting if not set::
 
     BANDIT_EMAIL = 'bandit@example.com'
 
+This option can also be a list to send the hijacked email to multiple addresses::
+
+    BANDIT_EMAIL = ['bandit@example.com', 'accomplice@example.com']
+
 
 ``BANDIT_WHITELIST``
 ----------------------------------------
