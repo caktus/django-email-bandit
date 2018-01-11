@@ -4,7 +4,6 @@ import logging
 
 from email.utils import parseaddr
 from functools import reduce
-from operator import and_
 
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -27,8 +26,10 @@ class HijackBackendMixin(object):
         admins = getattr(settings, 'ADMINS', ())
         server_email = getattr(settings, 'SERVER_EMAIL', 'root@localhost')
         bandit_email = getattr(settings, 'BANDIT_EMAIL', server_email)
+        if not isinstance(bandit_email, list):
+            bandit_email = [bandit_email]
         whitelist_emails = set(getattr(settings, 'BANDIT_WHITELIST', ()))
-        approved_emails = set([server_email, bandit_email, ] + list(whitelist_emails) +
+        approved_emails = set([server_email] + bandit_email + list(whitelist_emails) +
                               [email for name, email in admins])
 
         def is_approved(email):
@@ -40,7 +41,7 @@ class HijackBackendMixin(object):
         logged_count = 0
         for message in email_messages:
             recipients = message.to + message.cc + message.bcc
-            all_approved = reduce(and_, map(is_approved, recipients))
+            all_approved = all(map(is_approved, recipients))
             if all_approved:
                 to_send.append(message)
             else:
@@ -54,7 +55,7 @@ class HijackBackendMixin(object):
                 if not self.log_only:
                     header = render_to_string("bandit/hijacked-email-header.txt", context)
                     message.body = header + message.body
-                    message.to = [bandit_email]
+                    message.to = bandit_email
                     # clear cc/bcc
                     message.cc = []
                     message.bcc = []

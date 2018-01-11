@@ -10,7 +10,7 @@ from email.utils import parseaddr
 
 from django.conf import settings
 from django.core.mail import get_connection, EmailMessage
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 
 class FakeSMTPServer(smtpd.SMTPServer, threading.Thread):
@@ -73,6 +73,8 @@ class FakeSMTPServer(smtpd.SMTPServer, threading.Thread):
         self.join()
 
 
+@override_settings(BANDIT_EMAIL='bandit@example.com')
+@override_settings(ADMINS=(('Admin', 'admin@example.com'),))
 class BaseBackendTestCase(TestCase):
     """
     Test email interception in the HijackBackend.
@@ -83,17 +85,11 @@ class BaseBackendTestCase(TestCase):
         cls.server = FakeSMTPServer(('127.0.0.1', 0), None)
         settings.EMAIL_HOST = "127.0.0.1"
         settings.EMAIL_PORT = cls.server.socket.getsockname()[1]
-        cls._original_admins = settings.ADMINS
-        cls._original_bandit = getattr(settings, 'BANDIT_EMAIL', '')
-        settings.BANDIT_EMAIL = 'bandit@example.com'
-        settings.ADMINS = (('Admin', 'admin@example.com'), )
         cls.server.start()
 
     @classmethod
     def tearDownClass(cls):
         cls.server.stop()
-        settings.BANDIT_EMAIL = cls._original_bandit
-        settings.ADMINS = cls._original_admins
 
     def setUp(self):
         super(BaseBackendTestCase, self).setUp()
@@ -118,15 +114,41 @@ class HijackBackendTestCase(BaseBackendTestCase):
     def get_connection(self):
         return get_connection('bandit.backends.smtp.HijackSMTPBackend')
 
-    def test_basic_hijack(self):
-        """Emails should be redirected to send to BANDIT_EMAIL."""
-        emails = [EmailMessage('Subject', 'Content', 'from@example.com', ['to@example.com'])]
+    def assert_emails_are_hijacked(self, emails):
         num_sent = self.get_connection().send_messages(emails)
         self.assertEqual(len(emails), num_sent)
         messages = self.get_mailbox_content()
         self.assertEqual(len(messages), num_sent)
-        message = messages[0]
-        self.assertEqual(message.get_all('to'), ['bandit@example.com', ])
+        if isinstance(settings.BANDIT_EMAIL, list):
+            self.assertEqual(messages[0].get_all('to')[0].replace('\n', ''), ', '.join(settings.BANDIT_EMAIL))
+        else:
+            self.assertEqual(messages[0].get_all('to'), ['bandit@example.com', ])
+
+    def test_basic_hijack(self):
+        """Emails should be redirected to send to BANDIT_EMAIL."""
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', ['to@example.com'])]
+        self.assert_emails_are_hijacked(emails)
+
+    @override_settings(BANDIT_EMAIL=['bandit@example.com', 'accomplice@example.com', 'Hijacker <hijacker@example.com>'])
+    def test_send_to_multiple_bandits(self):
+        """Emails should be redirected to all bandit emails."""
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', ['to@example.com'])]
+        self.assert_emails_are_hijacked(emails)
+
+    def test_hijack_cc(self):
+        """Emails with unapproved recipient in CC should be redirected to send to BANDIT_EMAIL."""
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', to=['admin@example.com'], cc=['to@example.com'])]
+        self.assert_emails_are_hijacked(emails)
+
+    def test_hijack_bcc(self):
+        """Emails with unapproved recipient in BCC should be redirected to send to BANDIT_EMAIL."""
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', to=['admin@example.com'], bcc=['to@example.com'])]
+        self.assert_emails_are_hijacked(emails)
+
+    def test_send_to_mixed(self):
+        """Emails with mixed recipients will be hijacked."""
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', ['to@example.com', 'admin@example.com'])]
+        self.assert_emails_are_hijacked(emails)
 
     def test_send_to_admins(self):
         """Admin emails should not be hijacked."""
@@ -137,16 +159,6 @@ class HijackBackendTestCase(BaseBackendTestCase):
         self.assertEqual(len(messages), num_sent)
         message = messages[0]
         self.assertEqual(message.get_all('to'), ['admin@example.com', ])
-
-    def test_send_to_mixed(self):
-        """Emails with mixed recipients will be hijacked."""
-        emails = [EmailMessage('Subject', 'Content', 'from@example.com', ['to@example.com', 'admin@example.com'])]
-        num_sent = self.get_connection().send_messages(emails)
-        self.assertEqual(len(emails), num_sent)
-        messages = self.get_mailbox_content()
-        self.assertEqual(len(messages), num_sent)
-        message = messages[0]
-        self.assertEqual(message.get_all('to'), ['bandit@example.com', ])
 
     def test_send_multiple(self):
         """Emails with mixed recipients will be hijacked."""
@@ -162,10 +174,11 @@ class HijackBackendTestCase(BaseBackendTestCase):
         self.assertEqual(message.get_all('to'), ['admin@example.com', ])
 
     def test_whitelist_domain(self):
+        """Emails send to whitelisted domains should not be hijacked"""
         addresses = ['foo@whitelisted.test.com',
                      '<bar@whitelisted.test.com>',
                      'Foo Bar <baz@whitelisted.test.com>']
-        emails = [EmailMessage( 'Subject', 'Content', 'from@example.com', addresses)]
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', addresses)]
         num_sent = self.get_connection().send_messages(emails)
         self.assertEqual(len(emails), num_sent)
         messages = self.get_mailbox_content()
@@ -177,13 +190,37 @@ class LogOnlyBackendTestCase(BaseBackendTestCase):
     def get_connection(self):
         return get_connection('bandit.backends.smtp.LogOnlySMTPBackend')
 
-    def test_basic_hijack(self):
-        """Emails should only be logged."""
-        emails = [EmailMessage('Subject', 'Content', 'from@example.com', ['to@example.com'])]
+    def assert_emails_are_only_logged(self, emails):
         num_sent = self.get_connection().send_messages(emails)
         self.assertEqual(len(emails), num_sent)
         messages = self.get_mailbox_content()
         self.assertEqual(len(messages), 0)
+
+    def test_basic_hijack(self):
+        """Emails should only be logged."""
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', ['to@example.com'])]
+        self.assert_emails_are_only_logged(emails)
+
+    @override_settings(BANDIT_EMAIL=['bandit@example.com', 'accomplice@example.com', 'Hijacker <hijacker@example.com>'])
+    def test_send_to_multiple_bandits(self):
+        """Even with multiple bandit emails the email are only logged."""
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', ['to@example.com'])]
+        self.assert_emails_are_only_logged(emails)
+
+    def test_hijack_cc(self):
+        """Emails with unapproved recipient in CC should only be logged."""
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', to=['admin@example.com'], cc=['to@example.com'])]
+        self.assert_emails_are_only_logged(emails)
+
+    def test_hijack_bcc(self):
+        """Emails with unapproved recipient in BCC should only be logged."""
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', to=['admin@example.com'], bcc=['to@example.com'])]
+        self.assert_emails_are_only_logged(emails)
+
+    def test_send_to_mixed(self):
+        """Emails with mixed recipients will only be logged."""
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', ['to@example.com', 'admin@example.com'])]
+        self.assert_emails_are_only_logged(emails)
 
     def test_send_to_admins(self):
         """Admin emails should still be sent."""
@@ -195,14 +232,6 @@ class LogOnlyBackendTestCase(BaseBackendTestCase):
         message = messages[0]
         self.assertEqual(message.get_all('to'), ['admin@example.com', ])
 
-    def test_send_to_mixed(self):
-        """Emails with mixed recipients will only be logged."""
-        emails = [EmailMessage('Subject', 'Content', 'from@example.com', ['to@example.com', 'admin@example.com'])]
-        num_sent = self.get_connection().send_messages(emails)
-        self.assertEqual(len(emails), num_sent)
-        messages = self.get_mailbox_content()
-        self.assertEqual(len(messages), 0)
-
     def test_send_multiple(self):
         """Only the email to the admin should be sent (the other should be logged)."""
         emails = [EmailMessage('Subject', 'Content', 'from@example.com', ['to@example.com']),
@@ -213,3 +242,15 @@ class LogOnlyBackendTestCase(BaseBackendTestCase):
         self.assertEqual(len(messages), 1)
         message = messages[0]
         self.assertEqual(message.get_all('to'), ['admin@example.com', ])
+
+    def test_whitelist_domain(self):
+        """Emails send to whitelisted domains are still sent"""
+        addresses = ['foo@whitelisted.test.com',
+                     '<bar@whitelisted.test.com>',
+                     'Foo Bar <baz@whitelisted.test.com>']
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', addresses)]
+        num_sent = self.get_connection().send_messages(emails)
+        self.assertEqual(len(emails), num_sent)
+        messages = self.get_mailbox_content()
+        self.assertEqual(len(messages), num_sent)
+        self.assertEqual(messages[0].get_all('to')[0].replace('\n', ''), ', '.join(addresses))
