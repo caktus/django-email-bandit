@@ -7,8 +7,11 @@ from bandit.backends.base import HijackBackendMixin, LogOnlyBackendMixin
 
 class HijackSMTPBackend(HijackBackendMixin, SMTPBackend):
     """
-    This backend intercepts outgoing messages drops them to a single email
-    address.
+    This backend intercepts outgoing messages and logs them, allowing
+    only messages destined for ADMINS, BANDIT_EMAIL, SERVER_EMAIL, or
+    BANDIT_WHITELIST to be sent via SMTP.
+
+    It also sends intercepted messages to BANDIT_EMAIL.
     """
     pass
 
@@ -18,5 +21,7 @@ class LogOnlySMTPBackend(LogOnlyBackendMixin, SMTPBackend):
     This backend intercepts outgoing messages and logs them, allowing
     only messages destined for ADMINS, BANDIT_EMAIL, SERVER_EMAIL, or
     BANDIT_WHITELIST to be sent via SMTP.
+
+    It does not forward intercepted messages.
     """
     pass

@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 import logging
 
 from email.utils import parseaddr
-from functools import reduce
 
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -13,8 +12,11 @@ logger = logging.getLogger('bandit.backends.base')
 
 class HijackBackendMixin(object):
     """
-    This backend mixin intercepts outgoing messages drops them to a single
-    email address.
+    This backend mixin intercepts outgoing messages, redirecting them to addresses in the
+    BANDIT_EMAIL setting.
+
+    Addresses which are not in ADMINS, SERVER_EMAIL, BANDIT_EMAIL or BANDIT_WHITELIST are
+    intercepted.
     """
 
     def __init__(self, *args, **kwargs):
@@ -49,7 +51,7 @@ class HijackBackendMixin(object):
                            'previous_recipients': message.to,
                            'previous_cc': message.cc,
                            'previous_bcc': message.bcc
-                           }  # included for backwards compatibility
+                           }  # previous_* values included for backwards compatibility
                 log_message = render_to_string("bandit/hijacked-email-log-message.txt", context)
                 logger.log(self.log_level, log_message)
                 if not self.log_only:

@@ -22,4 +22,5 @@ def get_version():
         vers.append('%(releaselevel)s' % __version_info__)
     return ''.join(vers)
 
+
 __version__ = get_version()
