@@ -26,6 +26,14 @@ to a ``DeprecationWarning`` and the following release the feature and it's relat
 code will be removed.
 
 
+v1.5 (released 2018-01-11)
+--------------------------
+
+- Added documentation regarding context variables available in the email template (#25)
+- Allow BANDIT_EMAIL to be a list of addresses (#26)
+- Add flake8 and coverage tox environments
+
+
 v1.4 (released 2017-12-08)
 --------------------------
 
