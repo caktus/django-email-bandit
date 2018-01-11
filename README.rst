@@ -48,7 +48,7 @@ and set the email which will receive all of the emails::
 
     BANDIT_EMAIL = 'bandit@example.com'
 
-or even multiple addresses:
+or even multiple addresses::
 
     BANDIT_EMAIL = ['bandit@example.com', 'accomplice@example.com']
 
