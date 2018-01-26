@@ -40,6 +40,14 @@ To install django-email-bandit via pip::
 
     pip install django-email-bandit
 
+Add django-email-bandit to your installed apps::		
+
+    INSTALLED_APPS = (		
+        ...
+        'bandit',
+        ...
+    )
+
 For your test environment you should enable the backend::
 
     EMAIL_BACKEND = 'bandit.backends.smtp.HijackSMTPBackend'
