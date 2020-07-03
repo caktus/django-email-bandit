@@ -32,3 +32,11 @@ A domain can also be put in the BANDIT_WHITELIST. This will whitelist any email
 to that domain::
 
     BANDIT_WHITELIST = ('example.com', )
+
+
+``BANDIT_REGEX_WHITELIST``
+----------------------------------------
+
+Similar to ``BANDIT_WHITELIST``, but matches whole e-mail address by regular expressions::
+
+    BANDIT_REGEX_WHITELIST=["ba.*it@bandit\\.com", "joe@.*\\.org"]
