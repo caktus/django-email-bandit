@@ -26,6 +26,12 @@ to a ``DeprecationWarning`` and the following release the feature and it's relat
 code will be removed.
 
 
+v1.6 (released 2020-12-03)
+--------------------------
+
+- Add BANDIT_REGEXP_WHITELIST to allow match emails by regexps (#29)
+
+
 v1.5 (released 2018-01-11)
 --------------------------
 
