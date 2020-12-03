@@ -184,6 +184,34 @@ class HijackBackendTestCase(BaseBackendTestCase):
         messages = self.get_mailbox_content()
         self.assertEqual(messages[0].get_all('to')[0].replace('\n', ''), ', '.join(addresses))
 
+    @override_settings(
+        BANDIT_REGEX_WHITELIST=["ba.*it@bandit\\.com", "joe@.*\\.org"]
+    )
+    def test_whitelist_email_regex(self):
+        """Emails send to whitelisted by regex should not be hijacked"""
+        addresses = ['bandit@bandit.com',
+                     '<joe@bandit.org>',
+                     'Foo Bar <joe@joe.org>']
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', addresses)]
+        num_sent = self.get_connection().send_messages(emails)
+        self.assertEqual(len(emails), num_sent)
+        messages = self.get_mailbox_content()
+        self.assertEqual(messages[0].get_all('to')[0].replace('\n', ''), ', '.join(addresses))
+
+    @override_settings(
+        BANDIT_REGEX_WHITELIST=["ba.*it@bandit\\.com", "joe@.*\\.org"]
+    )
+    def test_whitelist_email_regex_not_passing(self):
+        """Emails that don't match whitelist regex should be hijacked"""
+        addresses = ['joe@bandit.com',
+                     '<joe@bandit.com>',
+                     'Foo Bar <joe@bandit.com>']
+        emails = [EmailMessage('Subject', 'Content', 'from@example.com', addresses)]
+        num_sent = self.get_connection().send_messages(emails)
+        self.assertEqual(len(emails), num_sent)
+        messages = self.get_mailbox_content()
+        self.assertEqual(messages[0].get_all('to')[0].replace('\n', ''), 'bandit@example.com')
+
 
 class LogOnlyBackendTestCase(BaseBackendTestCase):
 
