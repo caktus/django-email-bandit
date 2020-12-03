@@ -1,4 +1,4 @@
-Django-Email-Bandit
+django-email-bandit
 ==============================
 
 .. sidebar:: Build Status
@@ -16,14 +16,14 @@ logging. Mixin classes are provided to use the same hijack logic for any existin
 email backend such as `django-ses <https://github.com/hmarr/django-ses>`_.
 
 .. |master-status| image::
-    https://api.travis-ci.org/caktus/django-email-bandit.svg?branch=master
+    https://github.com/caktus/django-email-bandit/workflows/lint-test/badge.svg?branch=master
     :alt: Build Status
-    :target: https://travis-ci.org/caktus/django-email-bandit
+    :target: https://github.com/caktus/django-email-bandit/actions?query=branch%3Amaster
 
 .. |develop-status| image::
-    https://api.travis-ci.org/caktus/django-email-bandit.svg?branch=develop
+    https://github.com/caktus/django-email-bandit/workflows/lint-test/badge.svg?branch=master
     :alt: Build Status
-    :target: https://travis-ci.org/caktus/django-email-bandit
+    :target: https://github.com/caktus/django-email-bandit/actions?query=branch%3Adevelop
 
 
 Requirements
@@ -40,9 +40,9 @@ To install django-email-bandit via pip::
 
     pip install django-email-bandit
 
-Add django-email-bandit to your installed apps::		
+Add django-email-bandit to your installed apps::
 
-    INSTALLED_APPS = (		
+    INSTALLED_APPS = (
         ...
         'bandit',
         ...
@@ -72,6 +72,33 @@ Documentation
 -------------------------------
 
 Full project documentation is on `Read the Docs <https://django-email-bandit.readthedocs.org/>`_.
+
+
+Maintainer Information
+-------------------------------
+
+We use Github Actions to lint (using pre-commit, black, isort, and flake8),
+test (using tox and tox-gh-actions), calculate coverage (using coverage), and build
+documentation (using sphinx).
+
+To do these actions locally, do the following::
+
+  $ pip install -Ur dev-requirements.txt
+  $ pre-commit install  # <- only needs to be done once to install a local git hook
+  $ pre-commit run -a
+  $ tox
+  $ coverage run runtests.py && coverage report
+  $ sphinx-build docs docs/_build/html
+
+A Github Action workflow also builds and pushes a new package to PyPI whenever a new
+Release is created in Github. This uses a project-specific PyPI token, as described in
+the `PyPI documentation here <https://pypi.org/help/#apitoken>`_. That token has been
+saved in the ``PYPI_PASSWORD`` settings for this repo, but has not been saved anywhere
+else so if it is needed for any reason, the current one should be deleted and a new one
+generated.
+
+As always, be sure to bump the version in ``bandit/__init__.py`` before creating a
+Release, so that the proper version gets pushed to PyPI.
 
 
 Questions or Issues?

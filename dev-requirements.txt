@@ -1,0 +1,7 @@
+caktus-sphinx-theme
+coverage
+django>=2.0,<2.1
+pre-commit
+sphinx
+tox
+tox-gh-actions
