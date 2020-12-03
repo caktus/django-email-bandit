@@ -39,4 +39,4 @@ to that domain::
 
 Similar to ``BANDIT_WHITELIST``, but matches whole e-mail address by regular expressions::
 
-    BANDIT_REGEX_WHITELIST=["ba.*it@bandit\\.com", "joe@.*\\.org"]
+    BANDIT_REGEX_WHITELIST = ["ba.*it@bandit\\.com", "joe@.*\\.org"]
