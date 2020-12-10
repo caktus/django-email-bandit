@@ -1,17 +1,4 @@
-import os
-
 from setuptools import find_packages, setup
-
-
-def read_file(filename):
-    """Read a file into a string"""
-    path = os.path.abspath(os.path.dirname(__file__))
-    filepath = os.path.join(path, filename)
-    try:
-        return open(filepath).read()
-    except IOError:
-        return ""
-
 
 setup(
     name="django-email-bandit",
@@ -38,7 +25,7 @@ setup(
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    long_description=read_file("README.rst"),
+    long_description=open("README.rst").read(),
     test_suite="runtests.runtests",
     zip_safe=False,
 )

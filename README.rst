@@ -81,14 +81,9 @@ We use Github Actions to lint (using pre-commit, black, isort, and flake8),
 test (using tox and tox-gh-actions), calculate coverage (using coverage), and build
 documentation (using sphinx).
 
-To do these actions locally, do the following::
+We have a local script to do these actions locally, named ``maintain.sh``::
 
-  $ pip install -Ur dev-requirements.txt
-  $ pre-commit install  # <- only needs to be done once to install a local git hook
-  $ pre-commit run -a
-  $ tox
-  $ coverage run runtests.py && coverage report
-  $ sphinx-build docs docs/_build/html
+  $ ./maintain.sh
 
 A Github Action workflow also builds and pushes a new package to PyPI whenever a new
 Release is created in Github. This uses a project-specific PyPI token, as described in
@@ -108,4 +103,4 @@ If you have questions, issues or requests for improvements please let us know on
 `Github <https://github.com/caktus/django-email-bandit/issues>`_.
 
 Development sponsored by `Caktus Consulting Group, LLC
-<http://www.caktusgroup.com/services>`_.
+<https://www.caktusgroup.com/services>`_.

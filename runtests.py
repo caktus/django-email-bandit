@@ -3,13 +3,14 @@ import sys
 
 import django
 from django.conf import settings
+from django.test.utils import get_runner
 
 if not settings.configured:
     settings.configure(
         DATABASES={
             "default": {
                 "ENGINE": "django.db.backends.sqlite3",
-                "NAME": "test.db",
+                "NAME": ":memory:",
             }
         },
         MIDDLEWARE_CLASSES=(),
@@ -30,7 +31,6 @@ if not settings.configured:
 
 def runtests():
     django.setup()
-    from django.test.utils import get_runner
 
     TestRunner = get_runner(settings)
     test_runner = TestRunner(verbosity=1, interactive=True, failfast=True)
