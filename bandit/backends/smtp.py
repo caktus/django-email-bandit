@@ -13,6 +13,7 @@ class HijackSMTPBackend(HijackBackendMixin, SMTPBackend):
 
     It also sends intercepted messages to BANDIT_EMAIL.
     """
+
     pass
 
 
@@ -24,4 +25,5 @@ class LogOnlySMTPBackend(LogOnlyBackendMixin, SMTPBackend):
 
     It does not forward intercepted messages.
     """
+
     pass
