@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import logging
 import re
 from email.utils import parseaddr
@@ -7,7 +5,7 @@ from email.utils import parseaddr
 from django.conf import settings
 from django.template.loader import render_to_string
 
-logger = logging.getLogger("bandit.backends.base")
+logger = logging.getLogger(__name__)
 
 
 class HijackBackendMixin(object):
@@ -15,14 +13,14 @@ class HijackBackendMixin(object):
     This backend mixin intercepts outgoing messages, redirecting them to addresses in the
     BANDIT_EMAIL setting.
 
-    Addresses which are not in ADMINS, SERVER_EMAIL, BANDIT_EMAIL or BANDIT_WHITELIST are
-    intercepted.
+    Addresses which are not in ADMINS, SERVER_EMAIL, BANDIT_EMAIL, BANDIT_WHITELIST, or
+    which do not match BANDIT_REGEX_WHITELIST are intercepted.
     """
 
     def __init__(self, *args, **kwargs):
         self.log_only = kwargs.pop("log_only", False)
         self.log_level = kwargs.pop("log_level", logging.DEBUG)
-        super(HijackBackendMixin, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def send_messages(self, email_messages):
         admins = getattr(settings, "ADMINS", ())
@@ -80,11 +78,11 @@ class HijackBackendMixin(object):
                     # keep track of how many messages were only logged so we
                     # can report them as sent to the caller
                     logged_count += 1
-        sent_count = super(HijackBackendMixin, self).send_messages(to_send) or 0
+        sent_count = super().send_messages(to_send) or 0
         return sent_count + logged_count
 
 
 class LogOnlyBackendMixin(HijackBackendMixin):
     def __init__(self, *args, **kwargs):
         kwargs["log_only"] = True
-        super(LogOnlyBackendMixin, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
