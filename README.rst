@@ -21,7 +21,7 @@ email backend such as `django-ses <https://github.com/hmarr/django-ses>`_.
     :target: https://github.com/caktus/django-email-bandit/actions?query=branch%3Amaster
 
 .. |develop-status| image::
-    https://github.com/caktus/django-email-bandit/workflows/lint-test/badge.svg?branch=master
+    https://github.com/caktus/django-email-bandit/workflows/lint-test/badge.svg?branch=develop
     :alt: Build Status
     :target: https://github.com/caktus/django-email-bandit/actions?query=branch%3Adevelop
 
