@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from seacucumber.backend import SESBackend
 
 from bandit.backends.base import HijackBackendMixin, LogOnlyBackendMixin

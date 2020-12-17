@@ -1,7 +1,4 @@
-from __future__ import unicode_literals
-
 import asyncore
-import platform
 import smtpd
 import threading
 from email import message_from_string
@@ -22,8 +19,7 @@ class FakeSMTPServer(smtpd.SMTPServer, threading.Thread):
 
     def __init__(self, *args, **kwargs):
         threading.Thread.__init__(self)
-        if platform.python_version_tuple() >= ("3", "5"):
-            kwargs.setdefault("decode_data", True)
+        kwargs.setdefault("decode_data", True)
         smtpd.SMTPServer.__init__(self, *args, **kwargs)
         self._sink = []
         self.active = False
@@ -91,12 +87,10 @@ class BaseBackendTestCase(TestCase):
         cls.server.stop()
 
     def setUp(self):
-        super(BaseBackendTestCase, self).setUp()
         self.flush_mailbox()
 
     def tearDown(self):
         self.flush_mailbox()
-        super(BaseBackendTestCase, self).tearDown()
 
     def get_connection(self):
         raise NotImplementedError("Must define in subclass")
