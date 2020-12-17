@@ -9,21 +9,15 @@ ensure compatibility with newer versions of Django and Python.
 Supported Django Versions
 -------------------------------
 
-django-email-bandit aims to support the current security-supported releases of Django. That
-includes the most recent version and the prior release. While we will avoid unnecessarily
-dropping support for earlier releases of Django, changes in new versions which
-break compatibility outside of this window will result in dropped support for that
-version of Django. Any dropped Django versions will be included in the release notes.
+django-email-bandit aims to support the current security-supported releases of Django.
 
 
-Deprecation Policy
--------------------------------
+v2.0 (released 2020-12-17)
+--------------------------
 
-Beginning with the 1.0 release all backwards incompatible changes will go through a two release
-deprecation policy similar to Django. A feature deprecated in one version will
-raise a ``PendingDeprecationWarning``. In the following release that will be raised
-to a ``DeprecationWarning`` and the following release the feature and it's related compatibility
-code will be removed.
+- Drop support for Python 2.7
+- Drop support for Python 3.5
+- Add support for Django 2.2, 3.0 and 3.1
 
 
 v1.6 (released 2020-12-03)
