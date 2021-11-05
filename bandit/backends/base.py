@@ -79,6 +79,8 @@ class HijackBackendMixin(object):
                     # can report them as sent to the caller
                     logged_count += 1
         sent_count = super().send_messages(to_send) or 0
+        # attempt to workaround backends like django-celery-email that return a list instead of
+        # a count: https://github.com/pmclanahan/django-celery-email/pull/69
         return logged_count + (len(sent_count) if hasattr(sent_count, "__len__") else sent_count)
 
 
