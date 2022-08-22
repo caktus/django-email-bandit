@@ -42,8 +42,8 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"django-email-bandit"
-copyright = u"2011-2021, Caktus Consulting Group"
+project = "django-email-bandit"
+copyright = "2011-2021, Caktus Consulting Group"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -191,8 +191,8 @@ latex_documents = [
     (
         "index",
         "django-email-bandit.tex",
-        u"django-email-bandit Documentation",
-        u"Caktus Consulting Group",
+        "django-email-bandit Documentation",
+        "Caktus Consulting Group",
         "manual",
     ),
 ]
@@ -226,8 +226,8 @@ man_pages = [
     (
         "index",
         "django-email-bandit",
-        u"django-email-bandit Documentation",
-        [u"Caktus Consulting Group"],
+        "django-email-bandit Documentation",
+        ["Caktus Consulting Group"],
         1,
     )
 ]
@@ -245,8 +245,8 @@ texinfo_documents = [
     (
         "index",
         "django-email-bandit",
-        u"django-email-bandit Documentation",
-        u"Caktus Consulting Group",
+        "django-email-bandit Documentation",
+        "Caktus Consulting Group",
         "django-email-bandit",
         "One line description of project.",
         "Miscellaneous",
